@@ -34,7 +34,7 @@ class ProfileResource extends Resource
             \Filament\Forms\Components\Textarea::make('description')
                 ->required()
                 ->rows(5)
-                ->placeholder('Masukkan deskripsi diri lu...'),
+                ->placeholder('Masukkan deskripsi diri'),
                 
             \Filament\Forms\Components\FileUpload::make('photo')
                 ->image()

@@ -43,3 +43,22 @@ Route::get('/', function () {
     
     return view('welcome', compact('profile', 'projects', 'contact')); 
 });
+
+Route::get('/project/{id}', function ($id) {
+    // Cari project berdasarkan id yang diklik
+    $project = \App\Models\Project::find($id);
+    
+    
+    if (!$project) {
+        return redirect('/');
+    }
+    
+    
+    return view('detail', compact('project'));
+});
+
+Route::get('/project/{id}', function ($id) {
+    $project = \App\Models\Project::find($id);
+    if (!$project) { return redirect('/'); }
+    return view('detail', compact('project'));
+});

@@ -29,7 +29,7 @@ https://www.tooplate.com/view/2115-marvel
     <!-- MENU -->
     <nav class="navbar navbar-expand-sm navbar-light">
         <div class="container">
-            <a class="navbar-brand" href="index.html"><i class='uil uil-user'></i> Marvel</a>
+            <a class="navbar-brand" href="index.html"><i class='uil uil-user'></i> Cindy</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -115,12 +115,12 @@ https://www.tooplate.com/view/2115-marvel
                                       <p class="text-muted mt-2" style="font-size: 14px; line-height: 1.6;">{{ $project->description }}</p>
                                       
                                       @if(str_contains(strtolower($project->title), 'dailycash'))
-                                          <div class="mt-4">
-                                              <a href="{{ $project->link ?? '#' }}" class="btn" style="background: #8a3ffc; color: #fff; border-radius: 8px; font-size: 13px; font-weight: bold; padding: 8px 15px; display: inline-block; text-decoration: none; box-shadow: 0 3px 6px rgba(138, 63, 252, 0.3);">
-                                                  Detail Laporan Awal Project →
-                                              </a>
-                                          </div>
-                                      @endif
+                                <div class="mt-4">
+                                    <a href="/project/{{ $project->id }}" class="btn" style="background: #8a3ffc; color: #fff; border-radius: 5px; padding: 10px 20px; text-decoration: none; display: inline-block; font-size: 14px; font-weight: bold;">
+                                        Detail Laporan Awal Project →
+                                    </a>
+                                </div>
+                            @endif
 
                                   </div>
                               </div>
