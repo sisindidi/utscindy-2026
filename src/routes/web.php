@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\Contact;
+use App\Models\Project; 
+use App\Models\Profile;
 use Illuminate\Support\Facades\Route;
 use Livewire\Livewire;
 use Illuminate\Support\Facades\Response;
@@ -17,7 +20,26 @@ Livewire::setScriptRoute(function ($handle) {
 });
 /*
 / END
-*/
+ /*/
 Route::get('/', function () {
-    return view('welcome');
+    // Ambil data profile yang paling baru lu input di admin panel
+    $profile = Profile::latest()->first(); 
+
+    return view('welcome', compact('profile'));
+});
+
+
+Route::get('/', function () {
+    $profile = Profile::latest()->first(); 
+    $projects = Project::all(); 
+    
+    return view('welcome', compact('profile', 'projects'));
+});
+
+Route::get('/', function () {
+    $profile = Profile::latest()->first(); 
+    $projects = Project::all();
+    $contact = Contact::latest()->first(); 
+    
+    return view('welcome', compact('profile', 'projects', 'contact')); 
 });
