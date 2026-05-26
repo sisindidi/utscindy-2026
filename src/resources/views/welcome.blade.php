@@ -71,10 +71,9 @@ https://www.tooplate.com/view/2115-marvel
                 <div class="col-lg-7 col-md-12 col-12 d-flex align-items-center">
                     <div class="about-text">
                         <small class="small-text">Welcome to <span class="mobile-block">my portfolio website!</span></small>
-                        <h1>
-                            <span class="mr-2">{{ $profile->title ?? "Hey folks, I'm" }}</span>
-                            <span class="text-success">{{ $profile->name ?? 'Cindy Fitria' }}</span>
-                        </h1>
+                        <h1 class="mt-2" style="font-weight: bold; color: #333;">
+                             Hello Everyone I'am <span style="color: #8a3ffc;">{{ $profile->name ?? 'Cindy Fitria Maharani' }}</span>
+                  </h1>
                         <p class="mt-3">{{ $profile->description ?? 'Deskripsi default jika kosong' }}</p>
                         
                     </div>
@@ -132,142 +131,92 @@ https://www.tooplate.com/view/2115-marvel
     </section>
 
     <!-- CONTACT -->
-<section class="contact py-5" id="contact">
-    <div class="container text-center">
-        <h2 class="mb-5"
-            style="color: #8a3ffc; font-weight: bold; font-size: 28px;">
-            Hubungi Saya
-        </h2>
+<section class="contact py-5" id="contact" style="background: #fff; margin-top: 50px;">
+    <div class="container">
+        <h2 class="text-center mb-4" style="color: #8a3ffc; font-weight: bold; font-size: 28px;">💬 Hubungi Saya</h2>
+        <p class="text-center text-muted mb-5">Punya pertanyaan atau tertarik untuk bekerja sama? Hubungi melalui sosial media atau kirim pesan di bawah ini!</p>
 
-        <div class="row justify-content-center">
-            <div class="col-md-10 col-12 d-flex justify-content-center flex-wrap"
-                 style="gap: 45px;">
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-10 col-12 d-flex justify-content-center flex-wrap" style="gap: 45px;">
 
-                {{-- WhatsApp --}}
+                {{-- WhatsApp Bubble --}}
                 @if($contact && $contact->whatsapp)
                 @php
                     $nomor_wa = $contact->whatsapp;
-
                     if (str_starts_with($nomor_wa, '0')) {
                         $nomor_wa = '62' . substr($nomor_wa, 1);
                     }
-
                     $nomor_wa = str_replace([' ', '-'], '', $nomor_wa);
                 @endphp
-
-                <a href="https://wa.me/{{ $nomor_wa }}"
-                   target="_blank"
-                   style="text-decoration: none; text-align: center;">
-
-                    <div style="
-                        background: #e8dbff;
-                        width: 95px;
-                        height: 95px;
-                        border-radius: 22px;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        box-shadow: 0 5px 15px rgba(138,63,252,0.12);
-                        margin: 0 auto 12px auto;
-                    ">
-                        <div style="
-                            background: #25D366;
-                            width: 52px;
-                            height: 52px;
-                            border-radius: 50%;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                        ">
-                            <i class="bi bi-whatsapp"
-                               style="font-size: 26px; color: white;"></i>
+                <a href="https://wa.me/{{ $nomor_wa }}" target="_blank" style="text-decoration: none; text-align: center;">
+                    <div style="background: #e8dbff; width: 95px; height: 95px; border-radius: 22px; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(138,63,252,0.12); margin: 0 auto 12px auto;">
+                        <div style="background: #25D366; width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <i class="bi bi-whatsapp" style="font-size: 26px; color: white;"></i>
                         </div>
                     </div>
-
-                    <p style="color: #555; font-weight: bold;">
-                        WhatsApp
-                    </p>
+                    <p style="color: #555; font-weight: bold;">WhatsApp</p>
                 </a>
                 @endif
 
-
-                {{-- Email --}}
+                {{-- Email Bubble --}}
                 @if($contact && $contact->email)
-                <a href="mailto:{{ $contact->email }}"
-                   style="text-decoration: none; text-align: center;">
-
-                    <div style="
-                        background: #e8dbff;
-                        width: 95px;
-                        height: 95px;
-                        border-radius: 22px;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        box-shadow: 0 5px 15px rgba(138,63,252,0.12);
-                        margin: 0 auto 12px auto;
-                    ">
-                        <div style="
-                            background: #ea4335;
-                            width: 52px;
-                            height: 52px;
-                            border-radius: 50%;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                        ">
-                            <i class="bi bi-envelope-fill"
-                               style="font-size: 24px; color: white;"></i>
+                <a href="mailto:{{ $contact->email }}" style="text-decoration: none; text-align: center;">
+                    <div style="background: #e8dbff; width: 95px; height: 95px; border-radius: 22px; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(138,63,252,0.12); margin: 0 auto 12px auto;">
+                        <div style="background: #ea4335; width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <i class="bi bi-envelope-fill" style="font-size: 24px; color: white;"></i>
                         </div>
                     </div>
-
-                    <p style="color: #555; font-weight: bold;">
-                        Email
-                    </p>
+                    <p style="color: #555; font-weight: bold;">Email</p>
                 </a>
                 @endif
 
-
-                {{-- GitHub --}}
+                {{-- GitHub Bubble --}}
                 @if($contact && $contact->github)
-                <a href="{{ $contact->github }}"
-                   target="_blank"
-                   style="text-decoration: none; text-align: center;">
-
-                    <div style="
-                        background: #e8dbff;
-                        width: 95px;
-                        height: 95px;
-                        border-radius: 22px;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        box-shadow: 0 5px 15px rgba(138,63,252,0.12);
-                        margin: 0 auto 12px auto;
-                    ">
-                        <div style="
-                            background: #24292e;
-                            width: 52px;
-                            height: 52px;
-                            border-radius: 50%;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                        ">
-                            <i class="bi bi-github"
-                               style="font-size: 24px; color: white;"></i>
+                <a href="{{ $contact->github }}" target="_blank" style="text-decoration: none; text-align: center;">
+                    <div style="background: #e8dbff; width: 95px; height: 95px; border-radius: 22px; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(138,63,252,0.12); margin: 0 auto 12px auto;">
+                        <div style="background: #24292e; width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <i class="bi bi-github" style="font-size: 24px; color: white;"></i>
                         </div>
                     </div>
-
-                    <p style="color: #555; font-weight: bold;">
-                        GitHub
-                    </p>
+                    <p style="color: #555; font-weight: bold;">GitHub</p>
                 </a>
                 @endif
 
             </div>
         </div>
-        
+
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-10 col-12">
+                <div style="background: #fcfaff; border-radius: 24px; padding: 40px; box-shadow: 0 10px 30px rgba(138, 63, 252, 0.08);">
+                    
+                    <form action="{{ route('contact.store') }}" method="POST">
+                        @csrf <div class="row">
+                            <div class="col-md-6 col-12 mb-4">
+                                <label style="font-weight: bold; color: #555; display: block; margin-bottom: 8px;">Nama Lengkap</label>
+                                <input type="text" name="name" placeholder="Masukkan nama Anda" required style="width: 100%; padding: 12px 20px; border: 2px solid #e8dbff; border-radius: 12px; outline: none; background: #fff; transition: 0.3s;">
+                            </div>
+                            <div class="col-md-6 col-12 mb-4">
+                                <label style="font-weight: bold; color: #555; display: block; margin-bottom: 8px;">Alamat Email</label>
+                                <input type="email" name="email" placeholder="nama@email.com" required style="width: 100%; padding: 12px 20px; border: 2px solid #e8dbff; border-radius: 12px; outline: none; background: #fff; transition: 0.3s;">
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label style="font-weight: bold; color: #555; display: block; margin-bottom: 8px;">Isi Pesan / Laporan</label>
+                            <textarea name="message" rows="5" placeholder="Ketikkan pesan atau laporan awal project Anda di sini..." required style="width: 100%; padding: 12px 20px; border: 2px solid #e8dbff; border-radius: 12px; outline: none; background: #fff; resize: none; transition: 0.3s;"></textarea>
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" style="background: #8a3ffc; color: #fff; border: none; padding: 14px 35px; font-size: 16px; font-weight: bold; border-radius: 12px; cursor: pointer; box-shadow: 0 5px 15px rgba(138, 63, 252, 0.3); transition: 0.3s; display: inline-block; width: 100%;">
+                                Kirim Pesan Sekarang →
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
     </div>
 </section>
 
