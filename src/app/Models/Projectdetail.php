@@ -9,7 +9,7 @@ class Projectdetail extends Model
 {
     use HasFactory;
 
-    // Paksa nama tabelnya sesuai database lu
+   
     protected $table = 'project_details'; 
 
     protected $fillable = [

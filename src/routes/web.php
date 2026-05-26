@@ -25,7 +25,7 @@ Route::get('/', function () {
     $profile = Profile::latest()->first(); 
     $projects = Project::all();
     
-    // Ambil data yang ada nomor WA-nya (Khusus profil sosmed lu sendiri)
+   
     $contact = Contact::whereNotNull('whatsapp')->latest()->first(); 
     
     return view('welcome', compact('profile', 'projects', 'contact')); 

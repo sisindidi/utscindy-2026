@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('contacts', function (Blueprint $table) {
             $table->id();
             
-            // Kolom untuk informasi Sosial Media Anda (Profile)
+           
             $table->string('whatsapp')->nullable();
             $table->string('email')->nullable();
             $table->string('github')->nullable();
             
-            // Kolom tambahan untuk menampung data pesan masuk dari user
+           
             $table->string('name')->nullable();
             $table->text('message')->nullable();
             

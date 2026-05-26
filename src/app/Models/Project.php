@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
 {
-    // Pake guarded kosong biar Filament bebas ngisi data utama sekaligus data relasi detailnya
+    
     protected $guarded = [];
 
     /**

@@ -14,10 +14,9 @@ return new class extends Migration
         Schema::create('project_details', function (Blueprint $table) {
             $table->id();
             
-            // Kunci relasi rahasia yang nyambung ke tabel projects utama lu
+            
             $table->foreignId('project_id')->constrained('projects')->onDelete('cascade');
             
-            // Kolom dinamis buat isi laporan UTS lu di Filament
             $table->string('project_type')->nullable();
             $table->text('background')->nullable();
             $table->text('problem_analysis')->nullable();

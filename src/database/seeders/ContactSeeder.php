@@ -12,11 +12,10 @@ class ContactsSeeder extends Seeder
      */
     public function run(): void
     {
-        // Masukkan data sosmed Anda di sini. Kolom name & message dikosongkan (null).
+      
         DB::table('contacts')->insert([
-            'whatsapp'   => '081234567890', // <-- Ganti pakai nomor WA asli Anda
-            'email'      => 'cindy@example.com', // <-- Ganti pakai email asli Anda
-            'github'     => 'https://github.com/username', // <-- Ganti pakai link GitHub asli Anda
+            'whatsapp'   => '08123',
+            'email'      => 'cindy@example.com', 
             'name'       => null, 
             'message'    => null,
             'created_at' => now(),

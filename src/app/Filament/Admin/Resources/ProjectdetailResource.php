@@ -32,7 +32,7 @@ class ProjectdetailResource extends Resource
                             ->placeholder('--- Pilih Judul Project ---'),
                     ]),
 
-                // TAB-TAB LAPORAN YANG PINDAH KE SINI
+                
                 Forms\Components\Section::make('Struktur Detail Laporan Project (Dinamis)')
                     ->schema([
                         Forms\Components\Tabs::make('Laporan Konten')

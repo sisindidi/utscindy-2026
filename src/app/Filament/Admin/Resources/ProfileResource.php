@@ -38,7 +38,7 @@ class ProfileResource extends Resource
                 
             \Filament\Forms\Components\FileUpload::make('photo')
                 ->image()
-                ->directory('profiles') // Nanti foto bakal otomatis masuk folder public
+                ->directory('profiles') 
                 ->required(),
         ]);
 }
