@@ -2,47 +2,38 @@
 
 namespace App\Filament\Admin\Resources;
 
-use App\Filament\Admin\Resources\ProjectResource\Pages;
-use App\Filament\Admin\Resources\ProjectResource\RelationManagers;
-use App\Models\Project;
+use App\Filament\Admin\Resources\ProjectdetailResource\Pages;
+use App\Models\Projectdetail;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ProjectResource extends Resource
+class ProjectdetailResource extends Resource
 {
-    protected static ?string $model = Project::class;
+    protected static ?string $model = Projectdetail::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    // Menggunakan icon arsip biar beda dengan project utama
+    protected static ?string $navigationIcon = 'heroicon-o-archive-box'; 
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                // 1. INPUTAN ASLI BAWAAN LU (Tetap Dipertahankan)
-                Forms\Components\Section::make('Data Utama Project')
+                // PILIHAN UNTUK MENYAMBUNGKAN KE PROJECT UTAMA
+                Forms\Components\Section::make('Koneksi Data')
                     ->schema([
-                        Forms\Components\TextInput::make('category')
+                        Forms\Components\Select::make('project_id')
+                            ->label('Pilih Project Utama')
+                            ->relationship('project', 'title') // Menampilkan judul project dari tabel sebelah
                             ->required()
-                            ->placeholder('Contoh: Web Development'),
-                        Forms\Components\TextInput::make('title')
-                            ->required()
-                            ->placeholder('Contoh: DailyCash - Pencatatan Keuangan Pribadi'),
-                        Forms\Components\Textarea::make('description')
-                            ->required()
-                            ->rows(4)
-                            ->placeholder('Masukkan deskripsi project...'),
-                        Forms\Components\TextInput::make('link')
-                            ->placeholder('Contoh: https://github.com/... (Khusus DailyCash, sisanya kosongin)'),
+                            ->searchable()
+                            ->placeholder('--- Pilih Judul Project ---'),
                     ]),
 
-                // 2. INPUTAN BARU: LAPORAN UTS DINAMIS (Nyambung ke relasi detail d kecil)
+                // TAB-TAB LAPORAN YANG PINDAH KE SINI
                 Forms\Components\Section::make('Struktur Detail Laporan Project (Dinamis)')
-                    ->relationship('detail') // Memanggil public function detail() di model Project
                     ->schema([
                         Forms\Components\Tabs::make('Laporan Konten')
                             ->tabs([
@@ -90,7 +81,7 @@ class ProjectResource extends Resource
                                             ->directory('project-erd'),
                                     ]),
                             ]),
-                    ])->columnSpanFull(), // Biar kotakan laporan memanjang penuh ke kanan
+                    ])->columnSpanFull(),
             ]);
     }
 
@@ -98,32 +89,40 @@ class ProjectResource extends Resource
     {
         return $table
             ->columns([
-                \Filament\Tables\Columns\TextColumn::make('category')->badge(),
-                \Filament\Tables\Columns\TextColumn::make('title')->searchable(),
+                // Menampilkan nama project utamanya di tabel daftar detail
+                Tables\Columns\TextColumn::make('project.title')
+                    ->label('Project Utama')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('project_type')
+                    ->label('Jenis Pengujian')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true), // 👈 INI YANG UDAH BENER, CIN!
             ])
             ->actions([
-                \Filament\Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                \Filament\Tables\Actions\BulkActionGroup::make([
-                    \Filament\Tables\Actions\DeleteBulkAction::make(),
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListProjects::route('/'),
-            'create' => Pages\CreateProject::route('/create'),
-            'edit' => Pages\EditProject::route('/{record}/edit'),
+            'index' => Pages\ListProjectdetails::route('/'),
+            'create' => Pages\CreateProjectdetail::route('/create'),
+            'edit' => Pages\EditProjectdetail::route('/{record}/edit'),
         ];
     }
 }

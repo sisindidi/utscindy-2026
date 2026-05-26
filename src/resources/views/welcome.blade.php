@@ -99,37 +99,111 @@ https://www.tooplate.com/view/2115-marvel
                       <div class="col-lg-8 mx-auto mb-5">
                         <h2>Project Saya</h2>
                       </div>
-
-                      <div class="row text-left">
-                          @foreach($projects as $project)
-                              <div class="col-lg-4 col-md-6 col-12 mb-4">
-                                  <div class="card-project" style="background: #fff; border-radius: 15px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); height: 100%; border: 1px solid #f0f0f0;">
-                                      
-                                      <span class="badge" style="background: #e8dbff; color: #8a3ffc; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block;">
-                                          {{ $project->category }}
-                                      </span>
-                                      
-                                      <h4 class="mt-3" style="color: #8a3ffc; font-weight: bold; font-size: 18px;">{{ $project->title }}</h4>
-                                      
-                                      <p class="text-muted mt-2" style="font-size: 14px; line-height: 1.6;">{{ $project->description }}</p>
-                                      
-                                      @if(str_contains(strtolower($project->title), 'dailycash'))
-                                <div class="mt-4">
-                                    <a href="/project/{{ $project->id }}" class="btn" style="background: #8a3ffc; color: #fff; border-radius: 5px; padding: 10px 20px; text-decoration: none; display: inline-block; font-size: 14px; font-weight: bold;">
-                                        Detail Laporan Awal Project →
-                                    </a>
-                                </div>
-                            @endif
-
-                                  </div>
-                              </div>
-                          @endforeach
-                      </div>
-                      </div>
+        {{-- 1. SECTION BARISAN PROJECT UTAMA (TAMPILAN GRID KECIL KE SAMPING) --}}
+<div class="row text-left">
+    @foreach($projects as $project)
+        {{-- Di sini ukurannya balik jadi col-lg-4 (Muat 3 project sejajar ke samping) --}}
+        <div class="col-lg-4 col-md-6 col-12 mb-4">
+            <div class="card-project" style="background: #fff; border-radius: 15px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); height: 100%; border: 1px solid #f0f0f0; display: flex; flex-direction: column; justify-content: space-between;">
+                
+                <div>
+                    <span class="badge" style="background: #e8dbff; color: #8a3ffc; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block;">
+                        {{ $project->category }}
+                    </span>
+                    
+                    <h4 class="mt-3" style="color: #8a3ffc; font-weight: bold; font-size: 18px;">{{ $project->title }}</h4>
+                    <p class="text-muted mt-2" style="font-size: 14px; line-height: 1.6;">{{ $project->description }}</p>
                 </div>
-        </div>
-    </section>
+                
+                {{-- Tombol laporan awal bawaan lu tetep di dalam bubble --}}
+                @if(str_contains(strtolower($project->title), 'dailycash'))
+                    <div class="mt-4">
+                        <a href="/project/{{ $project->id }}" class="btn" style="background: #8a3ffc; color: #fff; border-radius: 5px; padding: 10px 20px; text-decoration: none; display: inline-block; font-size: 14px; font-weight: bold; width: 100%; text-align: center;">
+                            Detail Laporan Awal Project →
+                        </a>
+                    </div>
+                @endif
 
+            </div>
+        </div>
+    @endforeach
+</div>
+
+{{-- ================================================================== --}}
+{{-- 2. SECTION TERPISAH: RINCIAN DETAIL LAPORAN UTS (DI LUAR BUBBLE GRID) --}}
+{{-- ================================================================== --}}
+<div class="row text-left mt-5">
+    <div class="col-12">
+        {{-- Kita cari data detail khusus dari project yang namanya DailyCash --}}
+        @php
+            $dailyCashProject = $projects->first(function($p) {
+                return str_contains(strtolower($p->title), 'dailycash');
+            });
+        @endphp
+
+        @if($dailyCashProject && $dailyCashProject->detail)
+            <div class="main-laporan-section" style="background: #fff; border-radius: 15px; padding: 35px; box-shadow: 0 4px 20px rgba(138, 63, 252, 0.05); border: 1px solid #e8dbff; font-family: 'Poppins', sans-serif;">
+                
+                <h4 style="color: #6929c4; font-weight: bold; margin-bottom: 25px; font-size: 20px; border-bottom: 2px solid #f1f1f1; padding-bottom: 15px;">
+                    📋 Rincian Laporan UTS (Dinamis dari Tabel Projectdetail)
+                </h4>
+
+                @if($dailyCashProject->detail->project_type)
+                    <p style="font-size: 15px;"><strong>Jenis Pengujian:</strong> <span class="badge" style="background: #8a3ffc; color: #fff; padding: 5px 12px; border-radius: 5px;">{{ $dailyCashProject->detail->project_type }}</span></p>
+                @endif
+
+                @if($dailyCashProject->detail->background)
+                    <h5 style="font-weight: bold; color: #8a3ffc; margin-top: 30px; border-left: 4px solid #8a3ffc; padding-left: 12px; font-size: 16px;">A. Latar Belakang</h5>
+                    <div style="font-size: 14px; color: #555; line-height: 1.8;" class="mt-2 pl-3">
+                        {!! $dailyCashProject->detail->background !!}
+                    </div>
+                @endif
+
+                @if($dailyCashProject->detail->problem_analysis || $dailyCashProject->detail->system_requirements)
+                    <h5 style="font-weight: bold; color: #8a3ffc; margin-top: 30px; border-left: 4px solid #8a3ffc; padding-left: 12px; font-size: 16px;">B. Analisis & Kebutuhan Sistem</h5>
+                    <div class="pl-3 mt-2">
+                        @if($dailyCashProject->detail->problem_analysis)
+                            <strong style="font-size: 14px; color: #333;" class="d-block">Analisis Masalah:</strong>
+                            <div style="font-size: 14px; color: #555; line-height: 1.7;">{!! $dailyCashProject->detail->problem_analysis !!}</div>
+                        @endif
+                        @if($dailyCashProject->detail->system_requirements)
+                            <strong style="font-size: 14px; color: #333;" class="mt-3 d-block">Kebutuhan Fitur:</strong>
+                            <div style="font-size: 14px; color: #555; line-height: 1.7;">{!! $dailyCashProject->detail->system_requirements !!}</div>
+                        @endif
+                    </div>
+                @endif
+
+                <h5 style="font-weight: bold; color: #8a3ffc; margin-top: 30px; border-left: 4px solid #8a3ffc; padding-left: 12px; font-size: 16px;">C. Spesifikasi Teknologi</h5>
+                <div class="row mt-3 mx-0" style="font-size: 14px; color: #555; background: #fcfaff; padding: 20px; border-radius: 12px; border: 1px solid #e8dbff;">
+                    <div class="col-md-6">
+                        <p class="mb-2"><strong>Backend Framework:</strong> {{ $dailyCashProject->detail->backend_tech ?? '-' }}</p>
+                        <p class="mb-2"><strong>Frontend Engine:</strong> {{ $dailyCashProject->detail->frontend_tech ?? '-' }}</p>
+                        <p class="mb-2"><strong>Admin Panel:</strong> {{ $dailyCashProject->detail->admin_panel_tech ?? '-' }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="mb-2"><strong>Database System:</strong> {{ $dailyCashProject->detail->database_tech ?? '-' }}</p>
+                        <p class="mb-2"><strong>Development Env:</strong> {{ $dailyCashProject->detail->environment_tech ?? '-' }}</p>
+                    </div>
+                </div>
+
+                @if($dailyCashProject->detail->workflow_commands)
+                    <strong style="font-size: 14px; color: #333;" class="mt-3 d-block pl-3">Workflow Perintah Terminal:</strong>
+                    <div style="font-size: 13px; background: #f8f5fe; padding: 12px; border-radius: 8px; border: 1px solid #e8dbff; font-family: monospace; color: #6929c4;" class="mx-3 mt-1">
+                        {!! $dailyCashProject->detail->workflow_commands !!}
+                    </div>
+                @endif
+
+                @if($dailyCashProject->detail->erd_image)
+                    <h5 style="font-weight: bold; color: #8a3ffc; margin-top: 30px; border-left: 4px solid #8a3ffc; padding-left: 12px; font-size: 16px;">D. Rancangan ERD</h5>
+                    <div class="mt-3 pl-3 text-center">
+                        <img src="{{ asset('storage/' . $dailyCashProject->detail->erd_image) }}" alt="ERD {{ $dailyCashProject->title }}" class="img-fluid" style="border-radius: 12px; border: 1px solid #e8dbff; max-height: 450px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                    </div>
+                @endif
+
+            </div>
+        @endif
+    </div>
+</div>
     <!-- CONTACT -->
 <section class="contact py-5" id="contact" style="background: #fff; margin-top: 50px;">
     <div class="container">

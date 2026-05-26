@@ -21,11 +21,6 @@ Livewire::setScriptRoute(function ($handle) {
     return Route::get(config('app.asset_prefix') . '/livewire/livewire.js', $handle);
 });
 
-/*
-|--------------------------------------------------------------------------
-| Home Page (Sudah Dirapikan & Anti Bentrok)
-|--------------------------------------------------------------------------
-*/
 Route::get('/', function () {
     $profile = Profile::latest()->first(); 
     $projects = Project::all();
@@ -36,11 +31,7 @@ Route::get('/', function () {
     return view('welcome', compact('profile', 'projects', 'contact')); 
 });
 
-/*
-|--------------------------------------------------------------------------
-| Detail Project
-|--------------------------------------------------------------------------
-*/
+
 Route::get('/project/{id}', function ($id) {
     $project = Project::find($id);
     if (!$project) { 
@@ -49,11 +40,7 @@ Route::get('/project/{id}', function ($id) {
     return view('detail', compact('project'));
 });
 
-/*
-|--------------------------------------------------------------------------
-| Contact Form Store (Simpan Pesan Pengunjung)
-|--------------------------------------------------------------------------
-*/
+
 Route::post('/contact-store', function (Request $request) {
     $request->validate([
         'name' => 'required|string|max:255',

@@ -51,4 +51,15 @@ return [
         //     'color' => 'primary',
         // ]
     ],
+
+    'resources' => [
+    'label' => 'Resource Log',
+    'enabled' => false, // UTAMAKAN UBAH JADI FALSE DI SINI CIN!
+    'logger' => \Z3d0X\FilamentLogger\Loggers\ResourceLogger::class,
+    'color' => 'success',
+    'log_custom_fields' => true,
+    'exclude' => [
+        // 'App\Filament\Resources\UserResource',
+    ],
+],
 ];
