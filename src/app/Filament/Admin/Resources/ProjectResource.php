@@ -40,57 +40,6 @@ class ProjectResource extends Resource
                             ->placeholder('Contoh: https://github.com/... (Khusus DailyCash, sisanya kosongin)'),
                     ]),
 
-                // 2. INPUTAN BARU: LAPORAN UTS DINAMIS (Nyambung ke relasi detail d kecil)
-                Forms\Components\Section::make('Struktur Detail Laporan Project (Dinamis)')
-                    ->relationship('detail') // Memanggil public function detail() di model Project
-                    ->schema([
-                        Forms\Components\Tabs::make('Laporan Konten')
-                            ->tabs([
-                                
-                                // TAB 1: LATAR BELAKANG
-                                Forms\Components\Tabs\Tab::make('1. Latar Belakang')
-                                    ->schema([
-                                        Forms\Components\TextInput::make('project_type')
-                                            ->label('Tipe Laporan / Project')
-                                            ->placeholder('Contoh: Web Application Assessment'),
-                                        Forms\Components\RichEditor::make('background')
-                                            ->label('Isi Konten Latar Belakang'),
-                                    ]),
-
-                                // TAB 2: ANALISIS SISTEM
-                                Forms\Components\Tabs\Tab::make('2. Analisis Sistem')
-                                    ->schema([
-                                        Forms\Components\RichEditor::make('problem_analysis')
-                                            ->label('Analisis Masalah'),
-                                        Forms\Components\RichEditor::make('system_requirements')
-                                            ->label('Kebutuhan Sistem / Fitur Utama'),
-                                    ]),
-
-                                // TAB 3: SPESIFIKASI TECH STACK
-                                Forms\Components\Tabs\Tab::make('3. Spesifikasi Tech Stack')
-                                    ->schema([
-                                        Forms\Components\Grid::make(5)
-                                            ->schema([
-                                                Forms\Components\TextInput::make('backend_tech')->label('Backend Framework'),
-                                                Forms\Components\TextInput::make('frontend_tech')->label('Frontend Engine'),
-                                                Forms\Components\TextInput::make('admin_panel_tech')->label('Admin Panel'),
-                                                Forms\Components\TextInput::make('database_tech')->label('Database'),
-                                                Forms\Components\TextInput::make('environment_tech')->label('Environment'),
-                                            ]),
-                                        Forms\Components\RichEditor::make('workflow_commands')
-                                            ->label('Workflow Terminal Commands (Langkah Install)'),
-                                    ]),
-
-                                // TAB 4: UPLOAD FOTO ERD
-                                Forms\Components\Tabs\Tab::make('4. Desain ERD')
-                                    ->schema([
-                                        Forms\Components\FileUpload::make('erd_image')
-                                            ->label('Upload Foto ERD (.png / .jpg)')
-                                            ->image()
-                                            ->directory('project-erd'),
-                                    ]),
-                            ]),
-                    ])->columnSpanFull(), // Biar kotakan laporan memanjang penuh ke kanan
             ]);
     }
 
